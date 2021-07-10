@@ -19,7 +19,8 @@
   "scripts": {
     "build": "rollup -c",
     "test": "node --experimental-modules node_modules/.bin/c8 --reporter=html --reporter=text --check-coverage node --experimental-modules node_modules/.bin/mocha",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "install": "build"
   },
   "repository": {
     "type": "git",
@@ -49,14 +50,14 @@
     "parted": "^0.1.1",
     "promise": "^8.0.1",
     "resumer": "0.0.0",
-    "rollup": "^2.39.0",
     "string-to-arraybuffer": "^1.0.0",
     "whatwg-url": "^8.4.0"
   },
   "dependencies": {
     "busboy": "^0.3.1",
     "formdata-node": "^2.4.0",
-    "web-streams-polyfill": "^3.0.2"
+    "web-streams-polyfill": "^3.0.2",
+    "rollup": "^2.39.0"
   },
   "peerDependencies": {
     "form-data": ">=3.0.0"
