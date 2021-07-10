@@ -18,6 +18,7 @@ import Response from './response.js';
 import Headers, { createHeadersLenient } from './headers.js';
 import Request, { getNodeRequestOptions } from './request.js';
 import FetchError from './fetch-error.js';
+import { openStdin } from 'process';
 
 /**
  * Fetch function
@@ -29,6 +30,11 @@ import FetchError from './fetch-error.js';
 export default function fetch(url, opts) {
 	// wrap http.request into fetch
 	return new Promise((resolve, reject) => {
+		if (opts.signal && opts.signal.aborted) {
+			reject(new Error('aborted'))
+			return;
+		}
+
 		// build request object
 		const request = new Request(url, opts);
 		const options = getNodeRequestOptions(request);
@@ -42,6 +48,12 @@ export default function fetch(url, opts) {
 		function finalize() {
 			req.destroy();
 			clearTimeout(reqTimeout);
+		}
+
+		if (opts.signal) {
+			signal.addEventListener('abort', () => {
+				finalize()
+			})
 		}
 
 		if (request.timeout) {
@@ -179,7 +191,7 @@ export default function fetch(url, opts) {
 				body = body.pipe(zlib.createGunzip(zlibOptions));
 				resolve(new Response(body, response_options));
 
-			// for deflate
+				// for deflate
 			} else if (codings == 'deflate' || codings == 'x-deflate') {
 				// handle the infamous raw deflate response from old servers
 				// a hack for old IIS and Apache servers
@@ -194,7 +206,7 @@ export default function fetch(url, opts) {
 					resolve(new Response(body, response_options));
 				});
 
-			// otherwise, use response as-is
+				// otherwise, use response as-is
 			} else {
 				resolve(new Response(body, response_options));
 			}
