@@ -51,7 +51,7 @@ export default function fetch(url, opts) {
 		}
 
 		if (opts.signal) {
-			signal.addEventListener('abort', () => {
+			opts.signal.addEventListener('abort', () => {
 				finalize()
 			})
 		}
