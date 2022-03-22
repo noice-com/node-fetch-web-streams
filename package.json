@@ -12,7 +12,7 @@
   "files": [
     "src",
     "dist",
-		"rollup.config.js"
+    "rollup.config.js"
   ],
   "engines": {
     "node": ">=10"
@@ -57,8 +57,8 @@
   "dependencies": {
     "busboy": "^0.3.1",
     "formdata-node": "^2.4.0",
-    "web-streams-polyfill": "^3.0.2",
-    "rollup": "^2.39.0"
+    "rollup": "^2.39.0",
+    "web-streams-polyfill": "^3.0.2"
   },
   "peerDependencies": {
     "form-data": ">=3.0.0"
