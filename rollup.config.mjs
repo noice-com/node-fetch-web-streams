@@ -1,5 +1,7 @@
-import { builtinModules } from 'module';
-import { dependencies } from './package.json';
+import { builtinModules, createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
+const { dependencies } = require('./package.json');
 
 export default {
   input: 'src/index.js',
